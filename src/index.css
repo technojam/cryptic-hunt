@@ -1,3 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=Russo+One&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.glass {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.1px);
+  -webkit-backdrop-filter: blur(5.1px);
+}
+
+.font-russo {
+  font-family: "Russo One", sans-serif;
+  font-style: normal;
+}
+
+
+.blink {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+  
+}
+
+.leaderboard ::-webkit-scrollbar {
+  width: 5px;  
+}
+
+.leaderboard ::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 50px;
+}
+
+.leaderboard ::-webkit-scrollbar-thumb:hover {
+  background: #555;  
+}
+
+.leaderboard ::-webkit-scrollbar-track {
+  background: #f1f1f170;  
+  border-radius: 50px;
+}
+
