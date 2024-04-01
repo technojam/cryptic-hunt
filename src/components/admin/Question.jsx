@@ -5,15 +5,9 @@ function Question() {
   const [showPopup, setshowPopup] = useState(false);
 
   const renderFormattedText = (text) => {
-    // Replace text enclosed in double underquotes with bold tags
     text = text.replace(/"([^"]+)"/g, "<b>$1</b>");
-
-    // Replace backticks with <code> tags for monospace font
     text = text.replace(/!(.*?)!/g, "<code>$1</code>");
-
-    // Replace newline characters with <br> tags
     text = text.replace(/\n/g, "<br>");
-
     return text;
   };
 
