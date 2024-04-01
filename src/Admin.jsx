@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Navbar from "./components/admin/Navbar";
 import Question from "./components/admin/Question";
+import User from "./components/admin/User";
 function Admin() {
   const [Action, setAction] = useState(null);
 
@@ -14,7 +15,7 @@ function Admin() {
     <div className="flex flex-col h-screen bg-gray-800">
       <Navbar />
       <div className="flex h-[80%]">
-        <div className="bg-gray-700 w-2/12 m-3 rounded-xl h-full ">
+        <div className="bg-gray-700 min-w-52 m-3 h-max rounded-xl  ">
           <h1 className="text-center text-white text-xl font-semibold p-6">
             Actions
           </h1>
@@ -25,7 +26,10 @@ function Admin() {
             >
               Manage Question
             </button>
-            <button className="bg-gray-800 text-white rounded-lg p-2">
+            <button
+              onClick={onAction("U")}
+              className="bg-gray-800 text-white rounded-lg p-2"
+            >
               Manage User
             </button>
             <button className="bg-gray-800 text-white rounded-lg p-2">
@@ -40,6 +44,7 @@ function Admin() {
           </div>
         </div>
         {Action === "Q" && <Question />}
+        {Action === "U" && <User />}
       </div>
     </div>
   );

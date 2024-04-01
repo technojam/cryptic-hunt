@@ -7,6 +7,7 @@ export default {
       fontFamily: {
         sans: ["Poppins", "sans-serif"],
         protest: ["Protest Guerrilla", "sans-serif"],
+   
       },
     },
   },

@@ -3,7 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .glass {
   /* From https://css.glass */
   background: rgba(255, 255, 255, 0.08);
@@ -18,7 +17,6 @@
   font-style: normal;
 }
 
-
 .blink {
   animation: blinker 1s linear infinite;
 }
@@ -27,24 +25,32 @@
   50% {
     opacity: 0;
   }
-  
 }
 
-.leaderboard ::-webkit-scrollbar {
-  width: 5px;  
+.scrollbar ::-webkit-scrollbar {
+  width: 5px;
 }
 
-.leaderboard ::-webkit-scrollbar-thumb {
-  background: #888;
+.scrollbar ::-webkit-scrollbar-thumb {
+  background: #cbcaca;
   border-radius: 50px;
 }
 
-.leaderboard ::-webkit-scrollbar-thumb:hover {
-  background: #555;  
+.scrollbar ::-webkit-scrollbar-thumb:hover {
+  background: #6d6b6b;
 }
 
-.leaderboard ::-webkit-scrollbar-track {
-  background: #f1f1f170;  
+.scrollbar ::-webkit-scrollbar-track {
+  background: #4a4848;
   border-radius: 50px;
 }
 
+@font-face {
+  font-family: MrRobot;
+  src: url(./assets/mrRobot.ttf) format("truetype")
+}
+
+.font-MrRobot {
+  font-family: MrRobot;
+  font-style: normal;
+}

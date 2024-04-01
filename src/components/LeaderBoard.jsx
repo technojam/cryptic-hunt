@@ -2,10 +2,10 @@ import React from "react";
 
 function LeaderBoard() {
   return (
-    <div className="flex leaderboard flex-col gap-2 bg-[#111416]  h-4/5 w-1/5 rounded-lg">
-      <h1 className="text-center my-4 text-white">Leaderboard</h1>
+    <div className="flex scrollbar flex-col gap-2 bg-[#111416]  h-4/5 w-1/5 rounded-lg">
+      <h1 className="text-center my-3 font-semibold text-2xl text-white">Leaderboard</h1>
 
-      <div className="flex flex-col gap-3 overflow-y-scroll h-5/6  items-center ">
+      <div className="flex flex-col gap-3 overflow-y-scroll h-5/6 rounded-lg items-center ">
         <div className="flex items-center bg-slate-600 w-[96%] py-2 rounded-2xl">
           <img
             className="w-7 h-7 ml-2 mr-3"
