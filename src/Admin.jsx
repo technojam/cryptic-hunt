@@ -3,6 +3,8 @@ import { useState } from "react";
 import Navbar from "./components/admin/Navbar";
 import Question from "./components/admin/Question";
 import User from "./components/admin/User";
+import Team from "./components/admin/Team";
+import LeaderBoard from "./components/admin/LeaderBoard";
 function Admin() {
   const [Action, setAction] = useState(null);
 
@@ -32,10 +34,16 @@ function Admin() {
             >
               Manage User
             </button>
-            <button className="bg-gray-800 text-white rounded-lg p-2">
+            <button
+              onClick={onAction("T")}
+              className="bg-gray-800 text-white rounded-lg p-2"
+            >
               Manage Team
             </button>
-            <button className="bg-gray-800 text-white rounded-lg p-2">
+            <button
+              onClick={onAction("L")}
+              className="bg-gray-800 text-white rounded-lg p-2"
+            >
               Manage Leaderboard
             </button>
             <button className="bg-gray-800 text-white rounded-lg p-2">
@@ -43,8 +51,19 @@ function Admin() {
             </button>
           </div>
         </div>
+        {Action === null && (
+          <div className="flex flex-col w-full h-full rounded-xl justify-center items-center text-white bg-gray-700 m-3 p-6">
+
+            <h1 className="text-2xl font-semibold">Welcome to Admin Panel</h1>
+            <div>
+              <p className="text-lg mt-4">Please select an action from the left</p>
+            </div>
+          </div>
+        )}
         {Action === "Q" && <Question />}
         {Action === "U" && <User />}
+        {Action === "T" && <Team />}
+        {Action === "L" && <LeaderBoard />}
       </div>
     </div>
   );
