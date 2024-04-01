@@ -47,10 +47,15 @@
 
 @font-face {
   font-family: MrRobot;
-  src: url(./assets/mrRobot.ttf) format("truetype")
+  src: url(./assets/mrRobot.ttf) format("truetype");
 }
 
 .font-MrRobot {
   font-family: MrRobot;
   font-style: normal;
+}
+
+.terminal {
+  scrollbar-width: none; /* For Firefox */
+  user-select: none;
 }

@@ -53,10 +53,11 @@ function Admin() {
         </div>
         {Action === null && (
           <div className="flex flex-col w-full h-full rounded-xl justify-center items-center text-white bg-gray-700 m-3 p-6">
-
             <h1 className="text-2xl font-semibold">Welcome to Admin Panel</h1>
             <div>
-              <p className="text-lg mt-4">Please select an action from the left</p>
+              <p className="text-lg mt-4">
+                Please select an action from the left
+              </p>
             </div>
           </div>
         )}
