@@ -177,51 +177,6 @@ function Terminal() {
         return "du: missing operand";
       case "free":
         return "total        used        free      shared  buff/cache   available";
-      case "cmatrix":
-        const matrixEffect = () => {
-          const matrixContainer = document.createElement("div");
-          matrixContainer.className = "matrix-container";
-          document.body.appendChild(matrixContainer);
-
-          const createMatrixCharacter = () => {
-            const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-            return characters[Math.floor(Math.random() * characters.length)];
-          };
-
-          const createMatrixLine = () => {
-            const line = document.createElement("div");
-            line.className = "matrix-line";
-            for (let i = 0; i < 50; i++) {
-              const character = createMatrixCharacter();
-              const span = document.createElement("span");
-              span.textContent = character;
-              line.appendChild(span);
-            }
-            return line;
-          };
-
-          const animateMatrix = () => {
-            const matrixLines = document.querySelectorAll(".matrix-line");
-            matrixLines.forEach((line, index) => {
-              setTimeout(() => {
-                line.style.transform = `translateY(${Math.floor(
-                  Math.random() * 100
-                )}vh)`;
-              }, index * 100);
-            });
-          };
-
-          for (let i = 0; i < 50; i++) {
-            const line = createMatrixLine();
-            matrixContainer.appendChild(line);
-          }
-
-          animateMatrix();
-        };
-
-        matrixEffect();
-        return "";
-
       case "":
         return "";
       default:
