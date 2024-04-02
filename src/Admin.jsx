@@ -5,6 +5,7 @@ import Question from "./components/admin/Question";
 import User from "./components/admin/User";
 import Team from "./components/admin/Team";
 import LeaderBoard from "./components/admin/LeaderBoard";
+import AdminDash from "./components/admin/AdminDash";
 function Admin() {
   const [Action, setAction] = useState(null);
 
@@ -46,7 +47,10 @@ function Admin() {
             >
               Manage Leaderboard
             </button>
-            <button className="bg-gray-800 text-white rounded-lg p-2">
+            <button
+              onClick={onAction("A")}
+              className="bg-gray-800 text-white rounded-lg p-2"
+            >
               Admin
             </button>
           </div>
@@ -65,6 +69,7 @@ function Admin() {
         {Action === "U" && <User />}
         {Action === "T" && <Team />}
         {Action === "L" && <LeaderBoard />}
+        {Action === "A" && <AdminDash />}
       </div>
     </div>
   );
