@@ -1,30 +1,30 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 function Team() {
- // State for teams
+  // State for teams
+  const [initialTeam, setInitialTeam] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+  const [team, setTeam] = useState(initialTeam);
+  const [newTeam, setNewTeam] = useState("");
 
-  const initialTeam = [
-    {
-      name: "Turbodev",
-      members: [
-        {
-          name: "Neeraj",
-          role: "leader",
-        },
-        {
-          name: "Neeraj",
-          role: "member",
-        },
-        {
-          name: "hello",
-          role: "member",
-        },
-      ],
-      points: 100,
-    },
-  ];
-  const [team, setTeam] = useState(initialTeam); 
+  const url = "http://localhost:3000";
+
+  const HandleAddClick = () => {
+    setShowPopup(true);
+  };
+  const handleAddTeam = () => {
+    setShowPopup(false);
+    axios
+      .post(url, {
+        action: "addTeam",
+        name: newTeam,
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
+  };
 
   const search = (e) => {
     const searchValue = e.target.value.toLowerCase();
@@ -38,12 +38,20 @@ function Team() {
       return nameMatches || pointsMatches || memberMatches;
     });
 
-    setTeam(filteredTeams); 
+    setTeam(filteredTeams);
   };
 
   useEffect(() => {
-    setTeam(initialTeam);
-  });
+    axios
+      .post(url, {
+        action: "getTeams", // Removed 'body' key
+      })
+      .then((response) => {
+        console.log(response.data);
+        setInitialTeam(response.data.teams);
+        setTeam(response.data.teams); // Move this line here
+      });
+  }, []); // Added empty dependency array to run only once when component mounts
 
   return (
     <>
@@ -58,7 +66,10 @@ function Team() {
             onChange={(e) => search(e)}
             className="bg-gray-500 w-64 h-8 p-2 rounded-lg"
           />
-          <button className="border h-min py-1  px-2 mr-6 bg-white text-black  rounded-md">
+          <button
+            onClick={HandleAddClick}
+            className="border h-min py-1  px-2 mr-6 bg-white text-black  rounded-md"
+          >
             Add New
           </button>
         </div>
@@ -101,7 +112,10 @@ function Team() {
                   </td>
                   <td className="border  border-gray-600">
                     <div className="h-full flex justify-center">
-                      <button className="bg-white text-black p-1 px-3 rounded-md">
+                      <button
+                        onClick={() => {}}
+                        className="bg-white text-black p-1 px-3 rounded-md"
+                      >
                         Edit
                       </button>
                     </div>
@@ -112,6 +126,31 @@ function Team() {
           </table>
         </div>
       </div>
+      {showPopup && (
+        <div className="fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-gray-700 p-4 rounded-lg">
+            <h1 className="text-white text-lg font-semibold">Add New Team</h1>
+            <input
+              type="text"
+              placeholder="Team Name"
+              onChange={(e) => setNewTeam(e.target.value)}
+              className="bg-gray-500 w-64 h-8 p-2 rounded-lg"
+            />
+            <button
+              onClick={handleAddTeam}
+              className="border h-min py-1 px-2 mr-6 bg-white text-black  rounded-md"
+            >
+              Add
+            </button>
+            <button
+              onClick={() => setShowPopup(false)}
+              className="border h-min py-1 px-2 bg-white text-black  rounded-md"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
