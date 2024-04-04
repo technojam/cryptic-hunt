@@ -6,7 +6,7 @@ function LeaderBoard() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    axios.post(`http://localhost:3000/`,{"action":"getUsers"})
+    axios.post(`https://cryptic-back-z7rja.ondigitalocean.app/`,{"action":"getUsers"})
       .then(res => {
         const data = res.data;
         if (data.status == 200) {

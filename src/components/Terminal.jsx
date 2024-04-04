@@ -1,13 +1,31 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 
-function Terminal() {
+function Terminal({UserData}) {
   const [inputValue, setInputValue] = useState("");
   const [inputElements, setInputElements] = useState([]);
+  const {user } = useAuth0();
+  const [userData, setUserData] = useState([""]);
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
   const filesAndFolders = ["about.md", "projects.md", "contact.md"];
 
   useEffect(() => {
+
+    axios
+    .post("https://localhost:3000/", {
+      action: "getUser",
+      email: user.email,
+    })
+    .then((res) => {
+      console.log(res);
+      setUserData(res.data);
+      console.log(res.data);
+    });
+
+
     inputRef.current.focus();
     const banner = `
       ██████ ██████  ██    ██ ██████  ████████ ██  ██████     ██   ██ ██    ██ ███    ██ ████████ 
@@ -177,8 +195,21 @@ function Terminal() {
         return "du: missing operand";
       case "free":
         return "total        used        free      shared  buff/cache   available";
-      case "":
-        return "";
+      case "question":
+        console.log(UserData)
+        let question =''
+        axios
+          .post(`http://localhost:3000/`, {
+            action: "getQt",
+            level: UserData.level
+          })
+          .then((res) => {
+            const data = res.data;
+            console.log(data);
+          question = data.question
+            return data;
+          });
+        return question
       default:
         return `${command}: command not found </br>Type 'help' to see available commands.`;
     }

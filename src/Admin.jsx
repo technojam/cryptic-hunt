@@ -6,6 +6,7 @@ import User from "./components/admin/User";
 import Team from "./components/admin/Team";
 import LeaderBoard from "./components/admin/LeaderBoard";
 import AdminDash from "./components/admin/AdminDash";
+import {withAuthenticationRequired} from "@auth0/auth0-react"
 function Admin() {
   const [Action, setAction] = useState(null);
   

@@ -6,6 +6,7 @@ import { Auth0Provider } from '@auth0/auth0-react';
 import Dashboard from "./Dashboard.jsx";
 import "./index.css";
 import Admin from "./Admin.jsx";
+console.log(window.location.origin);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Auth0Provider

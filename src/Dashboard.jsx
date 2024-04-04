@@ -6,7 +6,7 @@ import axios from "axios";
 function Dashboard() {
   const [userData, setUserData] = useState({});
   const { user, logout } = useAuth0();
-  console.log(user);
+ 
   useEffect(() => {
     axios
       .post("http://localhost:3000/", {
@@ -23,7 +23,9 @@ function Dashboard() {
   return (
     <div className="flex flex-col bg-gray-800 h-screen">
       <h2 className="text-left text-white text-xl">Welcome {userData.name}</h2>
-      <h2 className=" text-center text-white text-xl">You are at level {userData.level} </h2>
+      <h2 className=" text-center text-white text-xl">
+        You are at level {userData.level}{" "}
+      </h2>
       <h1 className="text-center text-white text-4xl p-6">Dashboard</h1>
       <button
         onClick={() =>
@@ -37,7 +39,7 @@ function Dashboard() {
       </button>
       <div className="flex h-screen justify-around">
         {/*Terminal */}
-        <Terminal />
+        <Terminal UserData={userData} />
         {/*Leaderboard */}
         <LeaderBoard />
       </div>

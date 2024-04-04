@@ -171,8 +171,16 @@ function Question() {
                   className=" bg-gray-600  rounded-md p-1 px-3"
                 />
               </div>
+              <div className="flex items-center ">
+                <p className="px-2">Enter Mode</p>
+                <input
+                  type="number"
+                  min={1}
+                  placeholder="Enter Mode"
+                  className=" bg-gray-600  rounded-md p-1 px-3"
+                />
+              </div>
             </div>
-
             <button className="border h-min w-[10%]  mr-3 bg-white text-black  rounded-md">
               Add
             </button>
