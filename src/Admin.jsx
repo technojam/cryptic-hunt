@@ -8,7 +8,7 @@ import LeaderBoard from "./components/admin/LeaderBoard";
 import AdminDash from "./components/admin/AdminDash";
 function Admin() {
   const [Action, setAction] = useState(null);
-
+  
   const onAction = (action) => {
     return () => {
       setAction(action);
@@ -75,4 +75,4 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default withAuthenticationRequired(Admin);
