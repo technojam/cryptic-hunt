@@ -1,6 +1,8 @@
 import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function HomeCard() {
+  const { loginWithRedirect } = useAuth0();
   return (
     <div className="flex justify-around  text-gray-300 font-russo items-center w-screen">
       <div className="glass p-10 max-w-96  bg-white justify-center">
@@ -15,8 +17,13 @@ function HomeCard() {
       </div>
       <div className="glass flex flex-col gap-5 items-center p-10 justify-center">
         <h1 className="text-4xl font-bold">Log in to Continue</h1>
-        <button className="px-2 py-1 text-black rounded-lg bg-white">
-          <a href="/dashboard">Login</a>
+        <button
+          onClick={() => {
+            loginWithRedirect();
+          }}
+          className="px-2 py-1 text-black rounded-lg bg-white"
+        >
+          Login
         </button>
       </div>
     </div>
