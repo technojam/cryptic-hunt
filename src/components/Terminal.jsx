@@ -17,7 +17,7 @@ function Terminal({UserData}) {
     axios
     .post("https://localhost:3000/", {
       action: "getUser",
-      email: user.email,
+      email: "krishnaneeraj773@gmail.com",
     })
     .then((res) => {
       console.log(res);
