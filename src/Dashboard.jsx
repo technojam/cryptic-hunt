@@ -6,40 +6,50 @@ import axios from "axios";
 function Dashboard() {
   const [userData, setUserData] = useState({});
   const { user, logout } = useAuth0();
- 
-  useEffect(() => {
+
+  const setUSERDATA = () => {
     axios
-      .post("http://localhost:3000/", {
+      .post("http://localhost:3001/", {
         action: "getUser",
         email: user.email,
       })
       .then((res) => {
-        console.log(res);
         setUserData(res.data);
-        console.log(res.data);
+      });
+  };
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:3001/", {
+        action: "getUser",
+        email: user.email,
+      })
+      .then((res) => {
+        setUserData(res.data);
       });
   }, []);
 
   return (
     <div className="flex flex-col bg-gray-800 h-screen">
-      <h2 className="text-left text-white text-xl">Welcome {userData.name}</h2>
-      <h2 className=" text-center text-white text-xl">
-        You are at level {userData.level}{" "}
-      </h2>
-      <h1 className="text-center text-white text-4xl p-6">Dashboard</h1>
+      <div className="flex items-center justify-between">
+      <h2 className=" text-white text-xl">Welcome {userData.name}</h2>
+  
+      <h1 className=" text-white text-4xl ">Dashboard</h1>
       <button
         onClick={() =>
           logout({
             logoutParams: { returnTo: window.location.origin },
           })
         }
-        className="bg-red-500 text-white p-2 rounded-lg"
+        className="bg-red-500 text-white p-1 rounded-lg"
       >
         Logout
       </button>
-      <div className="flex h-screen justify-around">
+      </div>
+     
+      <div className="flex h-5/6 justify-around">
         {/*Terminal */}
-        <Terminal UserData={userData} />
+        <Terminal UserData={userData} UpdateData = {setUSERDATA} />
         {/*Leaderboard */}
         <LeaderBoard />
       </div>

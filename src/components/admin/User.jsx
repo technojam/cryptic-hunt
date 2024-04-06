@@ -7,7 +7,7 @@ function User() {
   const [reqPayload, setReqPayload] = useState({});
   const [showPopup, setShowPopup] = useState(false);
   const [team, setTeam] = useState([]);
-  const url = "http://localhost:3000";
+  const url = "http://localhost:3001";
 
   const onAddClick = () => {
     setShowPopup(!showPopup);
@@ -21,16 +21,22 @@ function User() {
     setEditUser(user);
     setShowPopup(true);
   };
-  useEffect(() => {
-    axios
-      .post(url, {
-        action: "getTeams", // Removed 'body' key
-      })
-      .then((response) => {
-        console.log(response.data);
-        setTeam(response.data.teams); // Move this line here
-      });
 
+  const handleDeleteClick = (user) => {
+    console.log(user);
+     axios
+       .post(url, {
+         action: "deleteUser",
+         id: user._id,
+       })
+       .then((response) => {
+         console.log(response.data);
+         setUsers(users.filter((u) => u._id !== user._id));
+       });
+  
+  
+  }
+  useEffect(() => {
     axios.post(url, { action: "getUsers" }).then((response) => {
       console.log(response.data);
       setUsers(response.data.users);
@@ -92,9 +98,6 @@ function User() {
                   Email
                 </th>
                 <th className="px-4 py-2 text-center  border-gray-600 border">
-                  Team
-                </th>
-                <th className="px-4 py-2 text-center  border-gray-600 border">
                   Points
                 </th>
                 <th className="px-4 py-2 text-center">Action</th>
@@ -109,18 +112,16 @@ function User() {
                   <td className="px-4 py-2 border  border-gray-600">
                     {u.email}
                   </td>
-                  <td className="px-4 py-2 border  border-gray-600">
-                    {u.teamName}
-                  </td>
+                 
                   <td className="px-4 py-2 border  border-gray-600">
                     {u.points}
                   </td>
                   <td className="px-4 py-2 flex justify-center">
                     <button
-                      onClick={() => handleEditClick(u)}
+                      onClick={() => handleDeleteClick(u)}
                       className="px-2 py-1 text-black bg-white rounded-md "
                     >
-                      Edit
+                      Delete
                     </button>
                   </td>
                 </tr>
@@ -148,21 +149,6 @@ function User() {
                 onChange={setReq}
                 className="bg-gray-500 p-2 rounded-lg"
               />
-              <section>
-                <select
-                  name="teamId"
-                  id="team"
-                  onChange={setReq}
-                  className="bg-gray-500 p-2 w-full rounded-lg"
-                >
-                  <option value={false}>Choose the Team</option>
-                  {team.map((t) => (
-                    <option key={t.id} value={t.id}>
-                      {t.id}
-                    </option>
-                  ))}
-                </select>
-              </section>
               <input
                 type="number"
                 name="points"

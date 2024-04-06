@@ -9,7 +9,7 @@ function Team() {
   const [team, setTeam] = useState(initialTeam);
   const [newTeam, setNewTeam] = useState("");
 
-  const url = "http://localhost:3000";
+  const url = "http://localhost:3001";
 
   const HandleAddClick = () => {
     setShowPopup(true);
