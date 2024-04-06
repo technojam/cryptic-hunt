@@ -31,25 +31,23 @@ function Dashboard() {
 
   return (
     <div className="flex flex-col bg-gray-800 h-screen">
-      <div className="flex items-center justify-between">
-      <h2 className=" text-white text-xl">Welcome {userData.name}</h2>
-  
-      <h1 className=" text-white text-4xl ">Dashboard</h1>
-      <button
-        onClick={() =>
-          logout({
-            logoutParams: { returnTo: window.location.origin },
-          })
-        }
-        className="bg-red-500 text-white p-1 rounded-lg"
-      >
-        Logout
-      </button>
+      <div className="flex items-center justify-between px-4">
+        <h2 className=" text-white text-xl">Welcome {userData.name}</h2>
+        <h1 className=" text-white text-4xl ">Dashboard</h1>
+        <button
+          onClick={() =>
+            logout({
+              logoutParams: { returnTo: window.location.origin },
+            })
+          }
+          className="bg-red-500 text-white px-3 py-1 rounded-lg"
+        >
+          Logout
+        </button>
       </div>
-     
       <div className="flex h-5/6 justify-around">
         {/*Terminal */}
-        <Terminal UserData={userData} UpdateData = {setUSERDATA} />
+        <Terminal UserData={userData} UpdateData={setUSERDATA} />
         {/*Leaderboard */}
         <LeaderBoard />
       </div>

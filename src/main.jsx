@@ -22,6 +22,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/admin" element={<Admin />} />
     </Routes>
-  </BrowserRouter>\
+  </BrowserRouter>
   </Auth0Provider>
 );

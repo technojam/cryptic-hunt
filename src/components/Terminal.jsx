@@ -166,11 +166,9 @@ function Terminal({ UserData, UpdateData }) {
       }
     }
   };
-
   const handleMouseDown = () => {
     inputRef.current.focus();
   };
-
   return (
     <div
       onClick={handleMouseDown}
