@@ -51,7 +51,7 @@ function Terminal({ UserData, UpdateData }) {
   const setHtml = (data) => {
     const newInput = (
       <div key={inputElements.length}>
-        <span className="font-mono pr-2">{UserData.user.name}@tj#:</span>
+        <span className="font-mono pr-2">cryptichunt@tj#:</span>
         <span className="font-mono">{inputValue}</span>
         <pre
           className="font-mono pl-2 text-sm"
@@ -78,11 +78,21 @@ function Terminal({ UserData, UpdateData }) {
       }
       if (command === "question") {
         let question = "";
+        console.log("question");
         const user = await axios.post(`http://localhost:3001/`, {
           action: "getUser",
           email: UserData.email,
         });
-        const level = user.data.user.level
+        const level = user.data.user.level;
+        console.log(level)
+        if (level > 3 && !user.data.user.isPass) {
+          
+            return setHtml(
+              "Enter the pass key derived from the previous levels to proceed"
+            );
+          }
+        
+        console.log(level);
         axios
           .post(`http://localhost:3001/`, {
             action: "getQt",
@@ -95,6 +105,36 @@ function Terminal({ UserData, UpdateData }) {
           });
         console.log(question);
         return;
+      
+      }
+      if (command === "pass") {
+        if (!arg) {
+          return setHtml(
+            "Please type the pass key in this format 'pass {your pass key}'"
+          );
+        }
+        console.log(arg);
+
+        if (arg !== "tj") {
+          return setHtml("Incorrect pass key. Please try again.");
+        }
+        const user = await axios.post(`http://localhost:3001/`, {
+              action: "getUser",
+              email: UserData.email,
+            });
+            const email = user.data.user.email;
+            console.log(email);
+        axios
+          .post(`http://localhost:3001/`, {
+            action: "setIsPass",
+            email: email
+          })
+          .then((response) => {
+            console.log(response.data);
+            setHtml(
+              "You have entered the correct pass key. Proceed to next level"
+            );
+          });
       }
       if (command === "answer") {
         console.log(arg);
@@ -103,19 +143,8 @@ function Terminal({ UserData, UpdateData }) {
             "Please type the answer in this format 'answer {your answer}'"
           );
         }
-        if (!userData.user?.level) {
-          return setHtml(
-            "Please type 'question' to get the question <br> and then type 'answer' to check your answer"
-          );
-        }
-
         try {
-          const Correct = await axios.post(`http://localhost:3001/`, {
-            action: "checkAnswer",
-            answer: arg,
-            questionId: Question._id,
-          });
-          const correctstat = Correct.data.status;
+          const correctstat =  Question.answer.toLowerCase().includes(arg.toLowerCase());
           console.log(correctstat);
           if (correctstat) {
             console.log("correctstat");
@@ -136,6 +165,8 @@ function Terminal({ UserData, UpdateData }) {
             });
 
             UpdateData();
+          }else{
+            setHtml("Incorrect Answer. Please try again.");
           }
         } catch (error) {
           console.error("Error checking answer:", error);
@@ -147,8 +178,13 @@ function Terminal({ UserData, UpdateData }) {
         return;
       }
       if (command === "score") {
-        setHtml(`Your current score is ${userData.user.points}`);
-        return;
+        const user = await axios.post(`http://localhost:3001/`, {
+              action: "getUser",
+              email: UserData.email,
+            });
+            const points = user.data.user.points;
+            setHtml(`Your current score is ${points}`);
+            return; 
       }
       if (command === "help") {
         value = `
@@ -185,7 +221,7 @@ function Terminal({ UserData, UpdateData }) {
       </div>
       {inputElements}
       <div className="flex items-center gap-2">
-        <div className="font-mono text-[#8aff80]">{UserData.user.name}@tj#:</div>
+        <div className="font-mono text-[#8aff80]">cryptichunt@tj#:</div>
         <input
           ref={inputRef}
           value={inputValue}
