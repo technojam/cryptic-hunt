@@ -1,8 +1,29 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 function Question() {
   const [Questions, setQuestions] = useState([]);
   const [showPopup, setshowPopup] = useState(false);
+  const [payload, setPayload] = useState({});
+  const AddQuestion = () => {
+    axios
+      .post("http://localhost:3001/", {
+        action: "addQuestion",
+        question: payload.question,
+        answer: payload.answer,
+        hint: payload.hint,
+        points: payload.points,
+        level: payload.level,
+      })
+      .then((ques) => {
+        const questions = ques.data;
+        console.log(questions);
+        setQuestions(questions.questions);
+      });
+  };
+  const setPayloadValue = (e) => {
+    setPayload({ ...payload, [e.target.name]: e.target.value });
+  }
 
   const renderFormattedText = (text) => {
     text = text.replace(/"([^"]+)"/g, "<b>$1</b>");
@@ -15,61 +36,29 @@ function Question() {
     setshowPopup(!showPopup);
   };
 
-  const questions = [
-    {
-      question: `Problem Statement:
-      The renowned art collector, Ms. Steal Your Art, has vanished along with her prized possession, the "Mona Lisa Smile." You, a cunning detective with a knack for puzzles, are tasked with deciphering her cryptic message to locate the stolen masterpiece.
-      Input: A string message containing seemingly nonsensical words and numbers:
-      message = !davinci_1452-missing-500_coordinates(3, 11)!
-      Constraints:
-      The format of message might vary slightly but will always include keywords related to the artist/artwork and coordinates in parentheses.
-      Output: Return a single string representing the location where Ms. Steal Your Art has hidden the "Mona Lisa Smile."
-      Explanation:
-      This challenge requires a keen eye for detail and some basic knowledge of art history to crack Ms. Steal Your Art's code.
-      Step 1: Identify the Reference
-      The message mentions "davinci" and "Mona Lisa Smile," indicating a connection to a famous artist and artwork.
-      Step 2: Analyze the Keywords
-      "davinci" likely refers to Leonardo da Vinci, the painter of the Mona Lisa.
-      "1452-missing-500" might be dates or a calculation.
-      Step 3: Understand the Coordinates
-      The message includes coordinates in parentheses: (3, 11). These could represent a location on a map or grid system.
-      Step 4: Combining the Clues (Medium Difficulty)
-      Leonardo da Vinci is most associated with Italy, where the Mona Lisa is usually displayed.
-      Focus on the numbers and their relation to each other.
-      Consider how the coordinates could be used within a museum or gallery setting.
-      Unique Solution:
-      This challenge has a unique solution that relies on basic math and knowledge of famous artwork placement. 
-      `,
-      answer: "Guido van Rossum",
-      hint: "Guido van Rossum",
-      points: 10,
-      level: 1,
-    },
-    {
-      question: "Who Created Python Programming Language ?",
-      answer: "Guido van Rossum",
-      hint: "Guido van Rossum",
-      points: 10,
-      level: 1,
-    },
-    {
-      question: "Who Created Python Programming Language ?",
-      answer: "Guido van Rossum",
-      hint: "Guido van Rossum",
-      points: 10,
-      level: 1,
-    },
-    {
-      question: "Who Created Python Programming Language ?",
-      answer: "Guido van Rossum",
-      hint: "Guido van Rossum",
-      points: 10,
-      level: 1,
-    },
-  ];
-
+  const handleDeleteClick = (ques) => {
+    axios
+      .post("http://localhost:3001/", {
+        action: "deleteQuestion",
+        id: ques,
+      })
+      .then((ques) => {
+        const questions = ques.data;
+        console.log(questions);
+        let question = Questions.filter((q) => q._id !== ques._id);
+        setQuestions(question);
+      });
+  };
   useEffect(() => {
-    setQuestions(questions);
+    axios
+      .post("http://localhost:3001/", {
+        action: "getQuestion",
+      })
+      .then((ques) => {
+        const questions = ques.data;
+        console.log(questions);
+        setQuestions(questions.questions);
+      });
   }, []);
   return (
     <>
@@ -112,10 +101,12 @@ function Question() {
                   Level: {question.level}
                 </h1>
                 <div>
-                  <button className="border h-min py-1 px-2 mr-3 bg-white text-black  rounded-md">
-                    Edit
-                  </button>
-                  <button className="border h-min py-1 px-2 mr-3 bg-white text-black  rounded-md">
+                  <button
+                    onClick={() => {
+                      handleDeleteClick(question._id);
+                    }}
+                    className="border h-min py-1 px-2 mr-3 bg-white text-black   rounded-md"
+                  >
                     Delete
                   </button>
                 </div>
@@ -139,16 +130,22 @@ function Question() {
             <p className="px-2">Enter Question</p>
             <textarea
               className="p-1 px-3 h-[50%] rounded-md bg-gray-600 "
+              name="question"
+              onChange={setPayloadValue}
               placeholder="Enter Question"
             ></textarea>
             <p className="px-2">Enter Answer</p>
             <textarea
               placeholder="Enter Hint"
+              name="answer"
+              onChange={setPayloadValue}
               className=" bg-gray-600  rounded-md p-1 px-3"
             />
             <p className="px-2">Enter Hint</p>
             <textarea
               type="text"
+              name="hint"
+              onChange={setPayloadValue}
               placeholder="Enter Hint"
               className=" bg-gray-600 rounded-md px-3 p-1"
             />
@@ -157,6 +154,8 @@ function Question() {
                 <p className="px-2">Enter Points</p>
                 <input
                   type="number"
+                  name="points"
+                  onChange={setPayloadValue}
                   min={1}
                   placeholder="Enter Points"
                   className=" bg-gray-600 rounded-md p-1 px-3"
@@ -167,6 +166,8 @@ function Question() {
                 <input
                   type="number"
                   min={1}
+                  name="level"
+                  onChange={setPayloadValue}
                   placeholder="Enter Level"
                   className=" bg-gray-600  rounded-md p-1 px-3"
                 />
@@ -177,11 +178,13 @@ function Question() {
                   type="number"
                   min={1}
                   placeholder="Enter Mode"
+                  name="mode"
+                  onChange={setPayloadValue}
                   className=" bg-gray-600  rounded-md p-1 px-3"
                 />
               </div>
             </div>
-            <button className="border h-min w-[10%]  mr-3 bg-white text-black  rounded-md">
+            <button onClick={AddQuestion} className="border h-min w-[10%]  mr-3 bg-white text-black  rounded-md">
               Add
             </button>
           </div>

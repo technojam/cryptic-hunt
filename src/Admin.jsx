@@ -34,14 +34,9 @@ function Admin() {
               onClick={onAction("U")}
               className="bg-gray-800 text-white rounded-lg p-2"
             >
-              Manage User
+              Manage Teams
             </button>
-            <button
-              onClick={onAction("T")}
-              className="bg-gray-800 text-white rounded-lg p-2"
-            >
-              Manage Team
-            </button>
+
             <button
               onClick={onAction("L")}
               className="bg-gray-800 text-white rounded-lg p-2"
