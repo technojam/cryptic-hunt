@@ -19,6 +19,9 @@ function Admin() {
     <div className="flex flex-col h-screen bg-gray-800">
       <Navbar />
       <div className="flex h-[80%]">
+
+
+       
         <div className="bg-gray-700 min-w-52 m-3 h-max rounded-xl  ">
           <h1 className="text-center text-white text-xl font-semibold p-6">
             Actions

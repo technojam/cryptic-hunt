@@ -51,7 +51,7 @@ function Terminal({ UserData, UpdateData }) {
   const setHtml = (data) => {
     const newInput = (
       <div key={inputElements.length}>
-        <span className="font-mono pr-2">{UserData.name}@tj#:</span>
+        <span className="font-mono pr-2">{UserData.user.name}@tj#:</span>
         <span className="font-mono">{inputValue}</span>
         <pre
           className="font-mono pl-2 text-sm"
@@ -187,7 +187,7 @@ function Terminal({ UserData, UpdateData }) {
       </div>
       {inputElements}
       <div className="flex items-center gap-2">
-        <div className="font-mono text-[#8aff80]">{UserData.name}@tj#:</div>
+        <div className="font-mono text-[#8aff80]">{UserData.user.name}@tj#:</div>
         <input
           ref={inputRef}
           value={inputValue}
