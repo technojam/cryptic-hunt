@@ -19,7 +19,7 @@ function HomeCard() {
         <h1 className="text-4xl font-bold">Log in to Continue</h1>
         <button
           onClick={() => {
-            loginWithRedirect();
+            loginWithRedirect();  
           }}
           className="px-2 py-1 text-black rounded-lg bg-white"
         >

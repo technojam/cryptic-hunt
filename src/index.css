@@ -2,7 +2,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+ 
 
+
+code{
+  background: green;
+  color: white;
+}
 .glass {
   /* From https://css.glass */
   background: rgba(255, 255, 255, 0.08);
